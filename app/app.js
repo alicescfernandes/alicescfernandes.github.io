@@ -57,18 +57,14 @@ window.onload = function() {
 
 
 
-
-
 function modal(e) {
-
-    if (modal_state == false) {
-        let nome = e.target.offsetParent.getAttribute("data-pid");
         var portfolio = getProjects();
         var extraHTML = "";
+        var nome =  e.target.offsetParent.getAttribute("data-pid");
+	
+    if (modal_state == false) {
 
         for (let projeto in portfolio) {
-
-
             if (portfolio[projeto].nome === nome) {
                 if (portfolio[projeto].urls) {
                     var urls = portfolio[projeto].urls;
@@ -95,5 +91,9 @@ function modal(e) {
             //
         modal_state = false;
     }
+
+	if(e.target.nodeName == "P" || e.target.nodeName == "H2") {
+		setModal(e.target.parentNode.parentNode.getAttribute("data-pid"))
+		}
 
 }
