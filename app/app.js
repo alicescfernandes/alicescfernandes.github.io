@@ -27,8 +27,8 @@ function getItems() {
     }
 
     if (total > perPage) {
-        if (!document.querySelector('.plus')) {
-            var html = '<button class="btn btn--dynamic plus"><i class="fa fa-plus"></i>Projetos</button>';
+        if (!document.querySelector('#plus')) {
+            var html = '<button id="plus" class="btn btn--dynamic plus"><i class="fa fa-plus"></i>Projetos</button>';
             document.querySelector('.results').insertAdjacentHTML('beforeend', html);
         }
     }
@@ -36,11 +36,11 @@ function getItems() {
 
 window.onload = function() {
     getItems();
-    document.querySelector('.plus').onclick = function() {
+    document.querySelector('#plus').onclick = function() {
         i = perPage;
         perPage += perPage;
        if (total === perPage || total < perPage) {
-        document.querySelector('.plus').style.display = "none";
+        document.querySelector('#plus').style.display = "none";
     }
         getItems();
 
