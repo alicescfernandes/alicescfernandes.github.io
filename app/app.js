@@ -7,6 +7,9 @@ var modal_state = false;
 function getItems() {
     var extraHTML = "";
     for (; i != perPage; i++) {
+    	if(projects[i] == undefined){
+    		break;
+    	}
         if (projects[i].urls !== undefined) {
 
             var urls = projects[i].urls;
