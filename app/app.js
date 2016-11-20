@@ -5,10 +5,7 @@ var perPage = 3;
 var modal_state = false;
 
 function getItems() {
-    //alert("me")
     var extraHTML = "";
-
-
     for (; i != perPage; i++) {
         if (projects[i].urls === undefined) {
 
@@ -44,9 +41,9 @@ function getItems() {
 window.onload = function() {
     getItems();
     document.querySelector('.plus').onclick = function() {
+    	alert("me");
         i = perPage;
         perPage += perPage;
-
        if (total === perPage || total < perPage) {
         document.querySelector('.plus').style.display = "none";
     }
@@ -58,12 +55,11 @@ window.onload = function() {
 
 
 function modal(e) {
-        var portfolio = getProjects();
-        var extraHTML = "";
-        var nome =  e.target.offsetParent.getAttribute("data-pid");
+    var portfolio = getProjects();
+    var extraHTML = "";
+    var nome =  e.target.offsetParent.getAttribute("data-pid");
 	
     if (modal_state == false) {
-
         for (let projeto in portfolio) {
             if (portfolio[projeto].nome === nome) {
                 if (portfolio[projeto].urls) {
@@ -79,8 +75,8 @@ function modal(e) {
             }
         }
 
-        modal_state = true;
-    } else {
+    modal_state = true;
+    }else{
         var modal_html = document.querySelector(".showcase")
         modal_html.style.opacity = "0";
         modal_html.style.transition = "all 0.3s"
@@ -92,8 +88,5 @@ function modal(e) {
         modal_state = false;
     }
 
-	if(e.target.nodeName == "P" || e.target.nodeName == "H2") {
-		setModal(e.target.parentNode.parentNode.getAttribute("data-pid"))
-		}
 
 }
