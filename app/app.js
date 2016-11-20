@@ -41,7 +41,6 @@ function getItems() {
 window.onload = function() {
     getItems();
     document.querySelector('.plus').onclick = function() {
-    	alert("me");
         i = perPage;
         perPage += perPage;
        if (total === perPage || total < perPage) {
