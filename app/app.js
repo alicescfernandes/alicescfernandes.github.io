@@ -7,7 +7,7 @@ var modal_state = false;
 function getItems() {
     var extraHTML = "";
     for (; i != perPage; i++) {
-        if (projects[i].urls === undefined) {
+        if (projects[i].urls !== undefined) {
 
             var urls = projects[i].urls;
             for (var opt in urls) {
@@ -21,8 +21,6 @@ function getItems() {
             <p>' + projects[i].sumario + '</p>' + extraHTML + '</div></div>'
 
         document.querySelector('.porfolio-search').insertAdjacentHTML('beforeend', html)
-
-
     }
 
     if (total > perPage) {
@@ -81,6 +79,4 @@ function modal(e) {
             //
         modal_state = false;
     }
-
-
 }
