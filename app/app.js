@@ -30,12 +30,7 @@ function getItems() {
             var html = '<button class="btn btn--dynamic plus"><i class="fa fa-plus"></i>Projetos</button>';
             document.querySelector('.results').insertAdjacentHTML('beforeend', html);
         }
-
-
-
     }
-    
-
 }
 
 window.onload = function() {
