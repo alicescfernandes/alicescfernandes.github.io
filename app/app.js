@@ -1,7 +1,7 @@
 var projects = getProjects()
 var i = 0;
 var total = projects.length;
-var perPage = 3;
+var perPage = 6;
 var modal_state = false;
 
 function getItems() {
