@@ -1,0 +1,54 @@
+html
+
+	include jade\head.jade
+	body
+		.container
+
+			input(type="checkbox" id="m-check").undisplay
+			header.sticky.m-show.align-right
+				label(for="m-check")
+					i.fa.fa-bars
+				nav
+
+					ul
+						li
+							a(href="#home") Home
+						//li About
+						li 
+							a(href="#portfolio") Portfolio
+
+			section.splash#home
+					.d-menu.m-hide
+						ul
+							li 
+								i.fa.fa-home
+								|Home
+							li 
+								i.fa.fa-question
+								|About
+							li 
+								i.fa.fa-briefcase 
+								|Portfolio
+					.col-70
+						h2 "Maybe Life is random, but i doubt it"
+						p  Hello, i am Alice Fernandes, a junior web designer
+			.scroll-sign.m-hide
+
+			section.portfolio#portfolio
+				div.searchBar.m-hide
+				div.results.m-show
+					.porfolio-search
+
+			footer
+				h3 Gostaste? Então vai ver o resto!
+				a(href="http://www.codepen.io/starz1996/", target="_blank").btn.link
+					i.fa.fa-codepen
+					|Codepen
+				a(href="https://github.com/Alicescfernandes/", target="_blank").btn.link
+					i.fa.fa-github
+					|Github
+				a(href="https://www.linkedin.com/in/alice-fernandes", target="_blank").btn.link
+					i.fa.fa-linkedin-square
+					|Linkedin
+				h3 Podes ainda transferir o CV. É gratis!
+				a(href="cv.pdf").btn.btn--block.btn--large.btn--outline-white Descarregar CV
