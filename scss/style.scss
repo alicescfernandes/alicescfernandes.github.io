@@ -10,6 +10,10 @@ $placeholder_color: rgba(200, 200, 200, 1);
     position: relative;
 }
 
+.disable-scroll {
+    overflow: hidden;
+}
+
 .main-fotogallery {
     height: 50vh;
     background-color: $placeholder_color;
