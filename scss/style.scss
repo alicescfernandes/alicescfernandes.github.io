@@ -1,6 +1,9 @@
+$placeholder_color: rgba(200, 200, 200, 1);
 * {
-    font-family: "Raleway";
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
     scroll-behavior: smooth;
+    margin: 0px;
+    padding: 0px;
 }
 
 .row {
@@ -9,7 +12,7 @@
 
 .main-fotogallery {
     height: 50vh;
-    background-color: aqua;
+    background-color: $placeholder_color;
 }
 
 body {
@@ -186,18 +189,6 @@ section {
     h3 {
         margin-top: 20px;
     }
-    .icon {
-        left: calc((100% - 35px)/2);
-        position: absolute;
-        bottom: 100px;
-        width: 35px;
-        margin: auto;
-        display: block;
-        animation-name: seta;
-        animation-duration: 1.5s;
-        animation-direction: normal;
-        animation-iteration-count: infinite;
-    }
 }
 
 .social-icons {
@@ -207,7 +198,7 @@ section {
 }
 
 .icon {
-    width: 40px;
+    width: 25px;
     background-color: transparent;
     border: 0px;
     position: absolute;
@@ -262,6 +253,7 @@ section {
         position: relative;
     }
     &-background {
+        background-color: $placeholder_color;
         //border-radius: 12px;
         overflow: hidden;
         box-shadow: 0px 0px 50px 1px rgba(0, 0, 0, 0.37);
@@ -406,6 +398,35 @@ img {
     }
 }
 
+section:first-of-type {
+    margin-top: -320px;
+}
+
+.carousel {
+    max-height: 50vh;
+    height: 50vh;
+    overflow: hidden;
+    transition: all 0.5s;
+    z-index: 4;
+    &-fullscreen {
+        transition: all 0.5s;
+        max-height: 100vh;
+        height: 100vh;
+    }
+    &-inner,
+    &-item {
+        height: inherit;
+    }
+    .slide {
+        width: 100%;
+        height: 100%;
+        background-color: $placeholder_color;
+        display: block;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
 // Extra small devices (portrait phones, less than 576px)
 // No media query for `xs` since this is the default in Bootstrap
 // Small devices (landscape phones, 576px and up)
@@ -469,34 +490,5 @@ img {
         .col {
             width: 100%
         }
-    }
-}
-
-section:first-of-type {
-    margin-top: -320px;
-}
-
-.carousel {
-    max-height: 50vh;
-    height: 50vh;
-    overflow: hidden;
-    transition: all 0.5s;
-    z-index: 4;
-    &-fullscreen {
-        transition: all 0.5s;
-        max-height: 100vh;
-        height: 100vh;
-    }
-    &-inner,
-    &-item {
-        height: inherit;
-    }
-    .slide {
-        width: 100%;
-        height: 100%;
-        background-color: antiquewhite;
-        display: block;
-        background-position: center;
-        background-size: cover;
     }
 }
