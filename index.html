@@ -26,289 +26,25 @@
     <meta property="article:author" content="">
 </head>
 
-<body>
-    <button class="icon icon-fullscreen" onclick="toggleFullScreen()">
-        <svg class="icon-minimize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.342 55.342">
-            <path
-                d="M18.246 5.023c-1.657 0-3 1.343-3 3v4.072L5.121 1.971C3.95.8 2.05.8.878 1.971c-1.171 1.171-1.171 3.071 0 4.243l9.882 9.881H7.173c-1.657 0-3 1.343-3 3s1.343 3 3 3h10.83c.197 0 .394-.021.587-.059.088-.018.169-.051.254-.076.103-.03.207-.054.306-.095.1-.042.189-.098.283-.149.078-.042.159-.077.233-.126.162-.108.312-.23.449-.367.002-.003.006-.004.008-.007.006-.006.009-.013.015-.019.034-.035.061-.077.094-.114.616-.55 1.011-1.341 1.011-2.231V8.022c.003-1.655-1.34-2.999-2.997-2.999zM20.235 34.257c-.17-.19-.355-.365-.568-.507-.072-.048-.149-.081-.224-.122-.097-.053-.189-.111-.292-.153-.099-.041-.201-.064-.302-.094-.086-.025-.168-.059-.258-.076-.194-.039-.391-.06-.587-.06H7.174c-1.657 0-3 1.343-3 3s1.343 3 3 3h3.588L.879 49.128c-1.172 1.171-1.172 3.071 0 4.242.585.586 1.354.879 2.121.879s1.536-.293 2.121-.879l10.125-10.125v4.072c0 1.657 1.343 3 3 3s3-1.343 3-3v-10.83c0-.89-.395-1.681-1.011-2.23zM54.463 49.128l-9.883-9.883h3.588c1.657 0 3-1.343 3-3s-1.343-3-3-3h-10.83c-.196 0-.394.021-.587.06-.093.018-.179.052-.268.079-.098.029-.197.051-.292.09-.108.045-.207.106-.309.163-.068.038-.141.068-.207.112-.213.142-.399.316-.569.508-.615.549-1.011 1.34-1.011 2.23v10.83c0 1.657 1.343 3 3 3s3-1.343 3-3v-4.072L50.221 53.37c.586.586 1.354.879 2.121.879s1.535-.293 2.121-.879c1.172-1.171 1.172-3.071 0-4.242zM34.986 21.086c.169.19.355.365.568.507.068.046.142.077.213.116.1.056.196.115.303.16.097.04.196.063.296.092.088.026.172.06.264.078.193.039.39.059.587.059h10.83c1.657 0 3-1.343 3-3s-1.343-3-3-3h-3.588l9.883-9.883c1.172-1.171 1.172-3.071 0-4.242-1.172-1.172-3.07-1.172-4.242 0L39.975 12.098V8.026c0-1.657-1.343-3-3-3s-3 1.343-3 3v10.83c0 .89.395 1.681 1.011 2.23z" />
-        </svg>
-
-        <svg class="icon-expand" xmlns=" http://www.w3.org/2000/svg" viewBox="0 0 55.343 55.343">
-            <path
-                d="M10.485 7.094h3.587c1.657 0 3-1.343 3-3s-1.343-3-3-3H3.242c-.009 0-.018.002-.027.003-.188.001-.375.02-.56.056-.09.018-.174.052-.262.078-.1.029-.202.053-.299.093-.1.042-.191.098-.285.15-.077.042-.157.076-.231.126-.162.108-.312.23-.449.367-.002.003-.006.004-.008.007-.006.006-.009.013-.015.019-.034.035-.061.077-.094.114C.396 2.657.001 3.448.001 4.338v10.83c0 1.657 1.343 3 3 3s3-1.343 3-3v-4.072l10.124 10.122c.585.585 1.354.878 2.121.878s1.536-.293 2.122-.879c1.171-1.171 1.171-3.071 0-4.243l-9.883-9.88zM16.125 34.124L6 44.249v-4.072c0-1.657-1.343-3-3-3s-3 1.343-3 3v10.83c0 .891.396 1.682 1.011 2.23.17.19.355.365.568.507.071.048.148.08.222.121.097.054.191.111.294.154.098.041.199.063.3.094.087.025.17.059.26.076.194.039.391.06.587.06h10.83c1.657 0 3-1.343 3-3s-1.343-3-3-3h-3.588l9.883-9.883c1.172-1.171 1.172-3.071 0-4.242-1.171-1.172-3.071-1.172-4.242 0zM52.342 37.177c-1.657 0-3 1.343-3 3v4.072L39.217 34.124c-1.172-1.172-3.07-1.172-4.242 0-1.172 1.171-1.172 3.071 0 4.242l9.883 9.883H41.27c-1.657 0-3 1.343-3 3s1.343 3 3 3H52.1c.196 0 .394-.021.587-.06.093-.018.178-.052.268-.079.098-.029.197-.051.292-.09.107-.045.206-.105.308-.162.069-.039.142-.068.208-.113.213-.143.399-.316.569-.508.615-.549 1.011-1.34 1.011-2.23v-10.83c-.001-1.657-1.344-3-3.001-3zM36.975 22.099c.768 0 1.535-.293 2.121-.879l10.125-10.125v4.072c0 1.657 1.343 3 3 3s3-1.343 3-3V4.336c0-.89-.396-1.682-1.012-2.231-.169-.19-.355-.365-.567-.507-.069-.046-.144-.077-.215-.117-.1-.055-.195-.115-.302-.159-.097-.04-.197-.063-.297-.092-.087-.026-.171-.06-.263-.078-.193-.039-.39-.059-.587-.059h-10.83c-1.657 0-3 1.343-3 3s1.343 3 3 3h3.588l-9.883 9.883c-1.172 1.171-1.172 3.071 0 4.242.587.587 1.354.881 2.122.881z" />
-        </svg>
-
-    </button>
-    <div id="home" class="main-fotogallery">
-        <div id="carouselExampleControls" class="carousel slide" data-interval="5000" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-
-                    <div role="img" aria-label="Observador V2" class="d-block w-100 slide"
-                        style="background-image:url('img/observador.webp')">
-                    </div>
-
-                </div>
-                <div class="carousel-item">
-                    <div role="img" aria-label="Observador V2" class="d-block w-100 slide"
-                        style="background-image:url('img/socialtube.webp')">
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div role="img" aria-label="Observador V2" class="d-block w-100 slide"
-                        style="background-image:url('img/swg.webp')">
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div role="img" aria-label="Observador V2" class="d-block w-100 slide"
-                        style="background-image:url('img/singtome.webp')">
-                    </div>
-                </div>
-
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-        <!-- <section>
-<div class="row">
-<div class="">
-<div class="" style="background-image:url('img/socialtube.webp')"></div>
-<div class="" style="background-image:url('img/observador.webp')"></div>
-<div class="" style="background-image:url('img/swg.webp')"></div>
-<div class="" style="background-image:url('img/dw.webp')"></div>
-<div class="" style="background-image:url('img/muse.webp')"></div>
-</div>
-</div>
-</section>-->
-    </div>
+<body> 
     <article>
-        <header class="">
-
-            <nav>
-
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#bio">Bio</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#social">Social</a></li>
-                </ul>
-            </nav>
-
-        </header>
-
         <section id="home" class="container">
-            <!--<div class="gradient"></div>-->
-
             <div class="row">
                 <div class="text-home">
                     <h1>Alice Fernandes</h1>
                     <h2>Front-End Web Developer</h2>
-                    <h3>"Some quote here"</h3>
                 </div>
             </div>
             </div>
-
-
-            <!-- <div class="icon">
-<img src="img/seta.svg">
-</div>-->
-
-
-        </section>
-
-        <section id="bio" class="container">
-            <h1 class="section-title">Bio</h1>
-            <p class="section-description">To keep it simple, i'm present this info in sort of a timeline with dates and
-                everything
-                <br>I could write a simple bio though</p>
-
-            <div class="timeline">
-                <ul>
-                    <li class="marker marker-open"> Enrolled in a Computer Science & Multimedia Engeneering Course @
-                        ISEL <span class="marker-comment"> <time>September, 2018</time></span> </li>
-                    <li class="marker marker-open"> Working as Front-End Web Developer @ Observador <span
-                            class="marker-comment">August, 2018 - Current</span> </li>
-                    <li class="marker"> Worked as a Front-End Web Developer @ AppointMaster <span
-                            class="marker-comment"> July, 2017 - August, 2018</span> </li>
-                    <li class="marker"> Finished a HND course in Multimedia <span class="marker-comment"> CINEL,
-                            2016-2017</span> </li>
-                    <li class="marker"> Finished a vocational course in Multimedia <span class="marker-comment"> Escola
-                            Secundária Dom Dinis, 2013 - 2015</span> </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="skills" class="container">
-            <h1 class="section-title">Skills</h1>
-            <p class="section-description">I can work with following technologies. There are also some pokemons in this
-                list </p>
-
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-4">
-                    <p>CSS</p>
-                    <p>CSS3</p>
-                    <p>SCSS</p>
-                    <p>Gulp</p>
-                    <p>Svelte</p>
-                    <p>HTML</p>
-                    <p>HTML5</p>
-                    <p>XHTML</p>
-                    <p>XML</p>
-                    <p>XSLT</p>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4">
-                    <p>Javascript</p>
-                    <p>Ecmascript</p>
-                    <p>jQuery</p>
-                    <p>Vue.js</p>
-                    <p>Gastly</p>
-                    <p>React</p>
-                    <p>Angular</p>
-                    <p>JSON</p>
-                    <p>Rest API's</p>
-                    <p>SOAP Services</p>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4">
-                    <p>PHP</p>
-                    <p>Python</p>
-                    <p>Flask</p>
-                    <p>C++</p>
-                    <p>WebPack</p>
-                    <p>Node.js</p>
-                    <P>Seel</P>
-                    <P>Pug</P>
-                    <p>Grunt</p>
-                    <p>Parcel</p>
-                </div>
-            </div>
-
-        </section>
-
-
-        <section id="projects" class="container">
-            <h1 class="section-title">Some of my best work</h1>
-            <p class="section-description">Some of the best stuff was done while working at some jobs. There is also
-                some interesting hobbie projects</p>
-            <div class="row">
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a href="https://observador.pt" alt="Observador case study"></a>
-                    <div class="project-mask">
-                        <div class="project-background" style="background-image:url('img/observador.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">Observador V2</h1>
-                                <p class="project-context-description">Took park of the super-heroes team that flipped
-                                    the old website into a Single-Page application</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a href="https://observador.pt" alt="Observador case study"></a>
-
-                    <div class="project-mask">
-                        <div class="project-background" style="background-image:url('img/swg.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">Subscribe With Google</h1>
-                                <p class="project-context-description">Implemented on the Front-End a new subscription
-                                    system on Observador, with Google's partnership and technical team</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a target="_blank" href="https://alicescfernandes.github.io/social-tube/" alt=""></a>
-                    <div class="project-mask">
-
-                        <div class="project-background" style="background-image:url('img/socialtube.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">Social Tube</h1>
-                                <p class="project-context-description">A static website developed for a college subject.
-                                </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a target="_blank" href="https://alicescfernandes.github.io/sing-to-me/" alt=""></a>
-
-                    <div class="project-mask">
-
-                        <div class="project-background" style="background-image:url('img/singtome.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">Sing To Me</h1>
-                                <p class="project-context-description">A website that detects what song is just by
-                                    singing. It makes use of the WebSpeech API, available in all modern browsers.</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a target="_blank" href="https://alicescfernandes.github.io/random-who/" alt=""></a>
-
-                    <div class="project-mask">
-
-                        <div class="project-background" style="background-image:url('img/dw.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">Random Who</h1>
-                                <p class="project-context-description">I'm a whovian, so i made a website that gives you
-                                    a random Doctor Who episode to watch </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4 project">
-                    <a target="_blank" href="https://alicescfernandes.github.io/muse/" alt=""></a>
-
-                    <div class="project-mask">
-
-                        <div class="project-background" style="background-image:url('img/muse.webp')"></div>
-                        <div class="project-context">
-                            <h4 class="project-context-title">My first website</h1>
-                                <p class="project-context-description">This is like my first website ever that i did for
-                                    Highschool. It's about Muse!</p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-
-        </section>
-
-        <section id="social" class="container">
-
-            <h1 class="section-title">Social & Contacts</h1>
-            <p class="section-description">You can contact me through my email <a
-                    href="mailto:alicescfernandes@gmail.com">alicescfernandes@gmail.com</a>. I also have some form of
-                presence in the social networks below.</p>
-
             <div class="row social-icons">
 
-                <div class="col-12 col-sm-12 col-md-4"><a class="btn" href="https://github.com/alicescfernandes"><svg
+                <div class="col-12 col-sm-12 col-md-12"><a class="btn btn-github" href="https://github.com/alicescfernandes"><svg
                             xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24">
                             <title>GitHub icon</title>
                             <path
                                 d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                         </svg>@alicescfernandes</a></div>
-                <div class="col-12 col-sm-12 col-md-4">
+                <div class="col-12 col-sm-12 col-md-12">
 
 
                     <a href="https://linkedin.com/in/alice-fernandes-788691191/" class="btn btn-linkedin">
@@ -319,17 +55,10 @@
                         </svg>@alicescfernandes
                     </a>
                 </div>
-                <div class="col-12 col-sm-12 col-md-4">
-                    <a href="https://codepen.io/AliceFernandes" class="btn"> <svg xmlns="http://www.w3.org/2000/svg"
-                            role="img" viewBox="0 0 24 24">
-                            <title>CodePen icon</title>
-                            <path
-                                d="M24 8.182l-.018-.087-.017-.05c-.01-.024-.018-.05-.03-.075-.003-.018-.015-.034-.02-.05l-.035-.067-.03-.05-.044-.06-.046-.045-.06-.045-.046-.03-.06-.044-.044-.04-.015-.02L12.58.19c-.347-.232-.796-.232-1.142 0L.453 7.502l-.015.015-.044.035-.06.05-.038.04-.05.056-.037.045-.05.06c-.02.017-.03.03-.03.046l-.05.06-.02.06c-.02.01-.02.04-.03.07l-.01.05C0 8.12 0 8.15 0 8.18v7.497c0 .044.003.09.01.135l.01.046c.005.03.01.06.02.086l.015.05c.01.027.016.053.027.075l.022.05c0 .01.015.04.03.06l.03.04c.015.01.03.04.045.06l.03.04.04.04c.01.013.01.03.03.03l.06.042.04.03.01.014 10.97 7.33c.164.12.375.163.57.163s.39-.06.57-.18l10.99-7.28.014-.01.046-.037.06-.043.048-.036.052-.058.033-.045.04-.06.03-.05.03-.07.016-.052.03-.077.015-.045.03-.08v-7.5c0-.05 0-.095-.016-.14l-.014-.045.044.003zm-11.99 6.28l-3.65-2.44 3.65-2.442 3.65 2.44-3.65 2.44zm-1.034-6.674l-4.473 2.99L2.89 8.362l8.086-5.39V7.79zm-6.33 4.233l-2.582 1.73V10.3l2.582 1.726zm1.857 1.25l4.473 2.99v4.82L2.89 15.69l3.618-2.417v-.004zm6.537 2.99l4.474-2.98 3.613 2.42-8.087 5.39v-4.82zm6.33-4.23l2.583-1.72v3.456l-2.583-1.73zm-1.855-1.24L13.042 7.8V2.97l8.085 5.39-3.612 2.415v.003z" />
-                        </svg> @AliceFernandes</a>
-                </div>
 
             </div>
         </section>
+
     </article>
 
     <footer>

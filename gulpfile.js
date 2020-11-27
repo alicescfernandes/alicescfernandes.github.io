@@ -23,4 +23,4 @@ gulp.task('images', () =>
         .pipe(gulp.dest('./img'))
 );
 
-gulp.watch(['./scss/**/*.scss'], gulp.parallel(["default"]));
+gulp.watch(['./src/scss/**/*.scss'], gulp.parallel(["default"]));
