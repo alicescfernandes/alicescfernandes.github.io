@@ -1,162 +1,173 @@
 $placeholder_color: rgba(200, 200, 200, 1);
 * {
-    font-family: "Raleway", Arial, Helvetica, sans-serif;
-    scroll-behavior: smooth;
-    margin: 0px;
-    padding: 0px;
+	font-family: 'Raleway', Arial, Helvetica, sans-serif;
+	scroll-behavior: smooth;
+	margin: 0px;
+	padding: 0px;
 }
 
 .row {
-    position: relative;
+	position: relative;
 }
 
 .disable-scroll {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .main-fotogallery {
-    height: 50vh;
-    background-color: $placeholder_color;
+	height: 50vh;
+	background-color: $placeholder_color;
 }
 
 body {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background-color:#1b1b1b;
-    color:white;
-
+	width: 100%;
+	height: 100%;
+	display: block;
+	background-color: #1b1b1b;
+	color: white;
 }
 
 a {
-    color: inherit;
-    text-decoration: none
+	color: inherit;
+	text-decoration: none;
 }
 
 ul,
 li {
-    display: inline-block;
-    list-style-type: none;
+	display: inline-block;
+	list-style-type: none;
 }
 
 nav {
-    text-align: center;
-    box-sizing: border-box;
-    li {
-        padding: 20px;
-    }
+	text-align: center;
+	box-sizing: border-box;
+	li {
+		padding: 20px;
+	}
 }
 
 h1 {
-    font-weight: bold;
-    font-size: 48px;
+	font-weight: bold;
+	font-size: 48px;
 }
 
-
-
+p {
+	margin-bottom: 0;
+}
 .btn {
-    display: block;
-    color:white;
-    &:hover{
-        color: white;
-    }
-    &:focus{
-        outline:none;
-        box-shadow: none;
-    }
-    &-github svg {
-        fill: white;
-    }
-    &-github svg {
-        fill: white;
-    }
-    &-linkedin svg {
-        fill: #0077B5;
-    }
-    svg {
-        display: inline-block;
-        vertical-align: middle;
-        width: 25px;
-        margin-right: 10px;
-    }
+	display: block;
+	text-align: left;
+	color: white;
+	&:hover {
+		color: white;
+	}
+	&:focus {
+		outline: none;
+		box-shadow: none;
+	}
+	&-github svg {
+		fill: white;
+	}
+	&-github svg {
+		fill: white;
+	}
+	&-linkedin svg {
+		fill: #0077b5;
+	}
+	&-fitbit svg {
+		fill: #00b0b9;
+	}
+	svg {
+		display: inline-block;
+		vertical-align: middle;
+		width: 25px;
+		margin-right: 10px;
+	}
 }
-
-
 
 .social-icons {
-    margin: auto;
-    margin-top: 20px;
+	margin: auto;
+	margin-top: 20px;
+	width: 510px;
+}
+
+.link {
+	a {
+		border-bottom: 2px solid #929292;
+		padding-bottom: 3px;
+		text-decoration: none;
+		&:hover {
+			color: white;
+			border-bottom: 2px solid white;
+		}
+	}
+	margin-top: 10px;
 }
 
 .icon {
-    width: 25px;
-    background-color: transparent;
-    border: 0px;
-    position: absolute;
-    z-index: 5;
-    right: 20px;
-    top: 20px;
-    color: white;
-    svg {
-        fill: white;
-    }
+	width: 25px;
+	background-color: transparent;
+	border: 0px;
+	position: absolute;
+	z-index: 5;
+	right: 20px;
+	top: 20px;
+	color: white;
+	svg {
+		fill: white;
+	}
 }
 
 .text-home {
-    display: inline-block;
-    text-align: center;
-    padding: 20px;
-    vertical-align: middle;
-    margin: auto;
-    //margin-top: calc((50vh - 181px) / 2);
-    font-size: 50px;
+	display: inline-block;
+	text-align: center;
+	padding: 20px;
+	vertical-align: middle;
+	margin: auto;
+	//margin-top: calc((50vh - 181px) / 2);
+	font-size: 50px;
 
-    h1{
-        font-size: 1em;
-    }
+	h1 {
+		font-size: 1em;
+	}
 
-    h2{
-        font-size: 0.5em;
-    }
+	h2 {
+		font-size: 0.5em;
+	}
 
-    h3{
-        font-size: 0.25em;
-    }
+	h3 {
+		font-size: 0.25em;
+	}
 }
-
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    .text-home {
-        font-size: 70px;
-    
-        h1{
-            font-size: 1em;
-        }
-    
-        h2{
-            font-size: 0.5em;
-        }
-    
-        h3{
-            font-size: 0.25em;
-        }
-    }
+	.text-home {
+		font-size: 70px;
+
+		h1 {
+			font-size: 1em;
+		}
+
+		h2 {
+			font-size: 0.5em;
+		}
+
+		h3 {
+			font-size: 0.25em;
+		}
+	}
 }
 
-
-section{
-
-    display: flex;
-    height: fit-content;
-    flex-direction: column;
-
+section {
+	display: flex;
+	height: fit-content;
+	flex-direction: column;
 }
 
-article{
-    display: flex;
-    align-items: center;
-    align-content: center;
-    height: 100vh;
-
+article {
+	display: flex;
+	align-items: center;
+	align-content: center;
+	height: 100vh;
 }

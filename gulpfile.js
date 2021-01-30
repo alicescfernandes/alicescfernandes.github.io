@@ -5,22 +5,19 @@ const webp = require('gulp-webp');
 
 sass.compiler = require('node-sass');
 
-const sassOptions = {outputStyle: 'compressed'};
+const sassOptions = { outputStyle: 'compressed' };
 const autoPrefixerOptions = {
-    cascade:false
-}
+	cascade: false,
+};
 gulp.task('default', function () {
-    return gulp.src('./src/scss/**/*.scss')
-    .pipe(autoprefixer(autoPrefixerOptions))
-        .pipe(sass(sassOptions).on('error', sass.logError))
-        .pipe(gulp.dest('./css'));
+	return gulp
+		.src('./src/scss/**/*.scss')
+
+		.pipe(autoprefixer(autoPrefixerOptions))
+		.pipe(sass(sassOptions).on('error', sass.logError))
+		.pipe(gulp.dest('./css'));
 });
 
+gulp.task('images', () => gulp.src('src/img/*').pipe(webp()).pipe(gulp.dest('./img')));
 
-gulp.task('images', () =>
-    gulp.src('src/img/*')
-        .pipe(webp())
-        .pipe(gulp.dest('./img'))
-);
-
-gulp.watch(['./src/scss/**/*.scss'], gulp.parallel(["default"]));
+gulp.watch(['./src/scss/**/*.scss'], gulp.parallel(['default']));
