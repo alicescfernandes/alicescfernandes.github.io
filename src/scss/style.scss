@@ -5,6 +5,11 @@ $placeholder_color: rgba(200, 200, 200, 1);
 	margin: 0px;
 	padding: 0px;
 }
+:root {
+	--dominant: rgb(60, 45, 255);
+	--dominant_hover: var(--dominant);
+	--background: #ffffff;
+}
 
 .row {
 	position: relative;
@@ -23,8 +28,8 @@ body {
 	width: 100%;
 	height: 100%;
 	display: block;
-	background-color: #1b1b1b;
-	color: white;
+	background-color: white;
+	color: var(--dominant);
 }
 
 a {
@@ -57,19 +62,22 @@ p {
 .btn {
 	display: block;
 	text-align: left;
-	color: white;
+	color: var(--dominant);
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+	padding: 5px 0px;
+	margin-bottom: 10px;
 	&:hover {
-		color: white;
+		color: var(--dominant_hover);
+		border-bottom: 2px solid var(--dominant_hover);
 	}
 	&:focus {
 		outline: none;
 		box-shadow: none;
 	}
+
 	&-github svg {
-		fill: white;
-	}
-	&-github svg {
-		fill: white;
+		fill: black;
 	}
 	&-linkedin svg {
 		fill: #0077b5;
@@ -93,12 +101,12 @@ p {
 
 .link {
 	a {
-		border-bottom: 2px solid #929292;
+		border-bottom: 2px solid transparent;
 		padding-bottom: 3px;
 		text-decoration: none;
 		&:hover {
-			color: white;
-			border-bottom: 2px solid white;
+			color: var(--dominant_hover);
+			border-bottom: 2px solid var(--dominant_hover);
 		}
 	}
 	margin-top: 10px;
