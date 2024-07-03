@@ -170,3 +170,11 @@ article {
 	align-content: center;
 	height: 100vh;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dominant: rgb(255 255 255);
+        --dominant_hover: var(--dominant);
+        --background: color(prophoto-rgb 0.06 0.06 0.06)
+    }
+}
