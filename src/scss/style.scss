@@ -173,17 +173,17 @@ article {
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--dominant: rgb(255 255 255);
+		--dominant: #44CCFF;
 		--dominant_hover: var(--dominant);
-		--background: radial-gradient(circle, rgba(13, 12, 12, 1) 0%, rgba(0, 0, 0, 1) 100%);
+		--background: #000022;
 	}
 
 	.btn {
 		&-github svg {
-			fill: white;
+			fill: var(--dominant);
 		}
 		&-linkedin svg {
-			fill: white;
+			fill: var(--dominant);
 		}
 	}
 }
