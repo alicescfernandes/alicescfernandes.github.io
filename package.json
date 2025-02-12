@@ -10,7 +10,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"esbuild": "0.23.0",
+		"esbuild": "0.25.0",
 		"esbuild-sass-plugin": "^3.3.1"
 	},
 	"packageManager": "yarn@4.5.0"
