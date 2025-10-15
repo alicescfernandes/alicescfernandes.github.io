@@ -171,23 +171,6 @@ article {
   height: 100vh;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --dominant: #44ccff;
-    --dominant_hover: var(--dominant);
-    --background: #000022;
-  }
-
-  .btn {
-    &-github svg {
-      fill: var(--dominant);
-    }
-    &-linkedin svg {
-      fill: var(--dominant);
-    }
-  }
-}
-
 /* Confetti Animation */
 #confetti-container {
   position: fixed;
@@ -270,14 +253,14 @@ article {
   transform: scale(1) rotate(0deg);
   background: linear-gradient(
     45deg,
-    #ff6b6b,
-    #4ecdc4,
-    #45b7d1,
-    #96ceb4,
-    #ff6b6b,
-    #4ecdc4,
-    #45b7d1,
-    #96ceb4
+    #8b6bff,
+    #3c2dff,
+    #2ddfff,
+    #6bffcc,
+    #8b6bff,
+    #3c2dff,
+    #2ddfff,
+    #6bffcc
   );
   background-size: 400% 400%;
   -webkit-background-clip: text;
@@ -293,5 +276,41 @@ article {
 
   100% {
     background-position: 100% 0%;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dominant: #44ccff;
+    --dominant_hover: var(--dominant);
+    --background: #000022;
+  }
+
+  .btn {
+    &-github svg {
+      fill: var(--dominant);
+    }
+    &-linkedin svg {
+      fill: var(--dominant);
+    }
+  }
+
+  .senior-text.animate-senior {
+    background: linear-gradient(
+      45deg,
+      #ff6b6b,
+      #4ecdc4,
+      #45b7d1,
+      #96ceb4,
+      #ff6b6b,
+      #4ecdc4,
+      #45b7d1,
+      #96ceb4
+    );
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 5s linear infinite;
   }
 }
