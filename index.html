@@ -31,7 +31,7 @@
 			<div class="row">
 				<div class="text-home">
 					<h1>Alice Fernandes</h1>
-					<h2><span class="senior-text">Senior</span> Front-End Web Developer</h2>
+					<h2><span class="senior-placeholder">Senior</span> Front-End Web Developer</h2>
 				</div>
 				<!-- Confetti container -->
 				<div id="confetti-container"></div>
@@ -81,105 +81,118 @@
 		</section>
 	</article>
 
-	<footer>
-		<!-- copy from old website-->
-	</footer>
-
 	<script>
-		// Confetti burst animation
-		const confettiCount = 100;
+		(function () {
+			// Confetti burst animation
+			const confettiCount = 250;
 
-		const confettiClassName = 'confetti';
-		const confettiText = '🎉';
-		const confettiFontSize = '2rem';
+			const confettiClassName = 'confetti';
+			const confettiText = ["🎉", "🥳", "🎉", "🎊"]
+			const confettiFontSize = '2rem';
 
-		function finalConfettiParticles(posY, posX) {
-			// Wider spread and longer travel distance
-			const centerAngle = Math.atan2(window.innerHeight / 2 - posY, window.innerWidth / 2 - posX);
-			const spread = Math.PI / 2; // 90 degree spread for more coverage
-			const angle = centerAngle + (Math.random() - 0.5) * spread;
-			const distance = 400 + Math.random() * 400; // Much longer travel distance
-			const randomX = Math.cos(angle) * distance;
-			const randomY = Math.sin(angle) * distance;
-			return { randomX, randomY };
-		}
-
-		function createConfettiParticles(posY, posX) {
-			const confetti = document.createElement('div');
-			confetti.className = confettiClassName;
-			confetti.style.fontSize = confettiFontSize;
-			confetti.textContent = confettiText;
-			confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
-
-			return confetti;
-		}
-		function createConfetti() {
-			const container = document.getElementById('confetti-container');
-			const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
-
-			// Left bottom corner burst
-			const leftX = -50;
-			const leftY = -50;
-
-			// Right bottom corner burst
-			const rightX = window.innerWidth + 50;
-			const rightY = -50;
+			const searchParams = new URLSearchParams(window.location.search)
+			const currentDate = Date.now();
+			const confettiEndDate = new Date("2025-11-11").getTime()
+			const hasConfetti = searchParams.has('🎉') || currentDate < confettiEndDate
 
 
-			// Create confetti for left burst (shooting toward center)
-			for (let i = 0; i < confettiCount; i++) {
-				const confetti = createConfettiParticles(leftY, leftX);
-
-				// Position at left corner
-				confetti.style.left = leftX + 'px';
-				confetti.style.top = leftY + 'px';
-
-				console.log(confetti.style.left, confetti.style.top);
-
-				const { randomX, randomY } = finalConfettiParticles(leftY, leftX);
-				// Set CSS custom properties for animation
-
-				confetti.style.setProperty('--random-x', randomX + 'px');
-				confetti.style.setProperty('--random-y', randomY + 'px');
-
-				// Random animation duration (1.5 to 3 seconds)
-
-				container.appendChild(confetti);
+			if (hasConfetti) {
+				const seniorText = document.querySelector('.senior-placeholder');
+				seniorText.classList.add('senior-text');
 			}
 
-			// Create confetti for right burst (shooting toward center)
-			for (let i = 0; i < confettiCount; i++) {
-				const confetti = createConfettiParticles(rightY, rightX);
-				// Position at right corner
-				confetti.style.left = rightX + 'px';
-				confetti.style.top = rightY + 'px';
-
-				const { randomX, randomY } = finalConfettiParticles(rightY, rightX);
-
-				// Set CSS custom properties for animation
-				confetti.style.setProperty('--random-x', randomX + 'px');
-				confetti.style.setProperty('--random-y', randomY + 'px');
-
-				container.appendChild(confetti);
+			function finalConfettiParticles(posY, posX) {
+				// Wider spread and longer travel distance
+				const centerAngle = Math.atan2(window.innerHeight / 2 - posY, window.innerWidth / 2 - posX);
+				const spread = Math.PI / 2; // 90 degree spread for more coverage
+				const angle = centerAngle + (Math.random() - 0.5) * spread;
+				const distance = 400 + Math.random() * 400; // Much longer travel distance
+				const randomX = Math.cos(angle) * distance;
+				const randomY = Math.sin(angle) * distance;
+				return { randomX, randomY };
 			}
 
-			// Remove confetti after animation completes
-			setTimeout(() => {
-				container.innerHTML = '';
-			}, 10_000);
-		}
+			function createConfettiParticles(posY, posX) {
+				const idx = Math.round(0 + (Math.random() * confettiText.length))
+				const confetti = document.createElement('div');
+				confetti.className = confettiClassName;
+				confetti.style.fontSize = `${1.5 + Math.random()}rem`
+				confetti.textContent = confettiText[idx];
+				confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
 
-		// Trigger animations on page load
-		window.addEventListener('DOMContentLoaded', () => {
-			// Start confetti burst animation
-			createConfetti();
+				return confetti;
+			}
 
-			// Trigger Senior text animation
-			const seniorText = document.querySelector('.senior-text');
-			setTimeout(() => {
-				seniorText.classList.add('animate-senior');
-			}, 0);
-		});
+			function createConfetti() {
+				const container = document.getElementById('confetti-container');
+				const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
+
+				// Left bottom corner burst
+				const leftX = -50;
+				const leftY = -50;
+
+				// Right bottom corner burst
+				const rightX = window.innerWidth + 50;
+				const rightY = -50;
+
+
+				// Create confetti for left burst (shooting toward center)
+				for (let i = 0; i < confettiCount; i++) {
+					const confetti = createConfettiParticles(leftY, leftX);
+
+					// Position at left corner
+					confetti.style.left = leftX + 'px';
+					confetti.style.top = leftY + 'px';
+
+					const { randomX, randomY } = finalConfettiParticles(leftY, leftX);
+					// Set CSS custom properties for animation
+
+					confetti.style.setProperty('--random-x', randomX + 'px');
+					confetti.style.setProperty('--random-y', randomY + 'px');
+
+					// Random animation duration (1.5 to 3 seconds)
+
+					container.appendChild(confetti);
+				}
+
+				// Create confetti for right burst (shooting toward center)
+				for (let i = 0; i < confettiCount; i++) {
+					const confetti = createConfettiParticles(rightY, rightX);
+					// Position at right corner
+					confetti.style.left = rightX + 'px';
+					confetti.style.top = rightY + 'px';
+
+					const { randomX, randomY } = finalConfettiParticles(rightY, rightX);
+
+					// Set CSS custom properties for animation
+					confetti.style.setProperty('--random-x', randomX + 'px');
+					confetti.style.setProperty('--random-y', randomY + 'px');
+
+					container.appendChild(confetti);
+				}
+
+				// Remove confetti after animation completes
+				setTimeout(() => {
+					container.innerHTML = '';
+				}, 10_000);
+			}
+
+			// Trigger animations on page load
+			window.addEventListener('DOMContentLoaded', () => {
+				if (!hasConfetti) {
+					return true
+				}
+
+				window.setTimeout(() => {
+					const seniorText = document.querySelector('.senior-placeholder');
+					seniorText.classList.add('animate-senior');
+				}, 0)
+
+				// Start confetti burst animation
+				createConfetti();
+			});
+		})()
+
 	</script>
 
 </body>
