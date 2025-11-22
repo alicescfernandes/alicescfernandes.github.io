@@ -1,4 +1,7 @@
-let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes", "Developer Friendly AI", "CSS Pixel Perfecter"]
+let titles_old = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes", "Developer Friendly AI", "CSS Pixel Perfecter"]
+
+let titles = ['Chief Typo Officer', "Senior LLM Engineer", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes"]
+
 
 // Title rotation functionality
 let currentTitleIndex = 0;
@@ -7,16 +10,19 @@ let promptSession = null;
 let webllmEngine = null;
 let isLLMReady = false;
 let llmProvider = null; // 'prompt-api' or 'webllm'
+let lastTitle = null;
 
 const systemPrompt = `You are a marketing consultant for a senior developer.
                     Generate ONLY a short, funny, creative job title.
                     Rules:
                     - Maximum 5 words
-                    - NO explanations, NO descriptions, NO additional text
                     - NO punctuation marks (no periods, exclamation marks, quotes, etc.)
                     - NO introductory phrases like "Here's", "Introducing", "New title:", etc.
                     - Output ONLY the title itself, nothing else. no backround text, no explanation, no nothing.
-                    - Sound like a real corporate job title but with a humorous twist, and related with the tech industry
+                    - Avoid questions or statements in the title, and "real" titles.
+                    - Sound like a real corporate job title but with a humorous twist.
+                    - Avoid using the same title twice, and avoid titles that are too similar to the last title.
+                    - Avoid titles that include AI, ML, or Chief in the title
                     Examples: ${titles.join(', ')}
                     Output format: Just the title, nothing else.`;
 
@@ -102,7 +108,7 @@ async function initializeWebLLM() {
         const engine = new window.webllm.MLCEngine({ initProgressCallback });
         // Using a smaller model for faster loading
         // https://github.com/mlc-ai/web-llm/issues/683
-        const modelId = 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC';
+        const modelId = 'Llama-3.2-1B-Instruct-q4f32_1-MLC';
         
         console.log("Loading WebLLM model...");
         await engine.reload(modelId, {
@@ -234,12 +240,12 @@ async function generateNewTitle() {
         
         if (llmProvider === 'prompt-api' && promptSession) {
             // Use Prompt Session API
-            rawTitle = await promptSession.prompt(`${systemPrompt}. Generate a new title!`);
+            rawTitle = await promptSession.prompt(`${systemPrompt}. Generate a new title (different than ${lastTitle})!`);
         } else if (llmProvider === 'webllm' && webllmEngine) {
             // Use WebLLM
             const messages = [
                 { role: 'system', content: systemPrompt },
-                { role: 'user', content: 'Generate a new title. Output ONLY the title, nothing else.' }
+                { role: 'user', content: `Generate a new title (different than ${lastTitle}) according to the system prompt: ${systemPrompt}. Output ONLY the title, nothing else.` }
             ];
             
             const response = await webllmEngine.chat.completions.create({
@@ -252,13 +258,14 @@ async function generateNewTitle() {
             // Just basic trimming, no validation
             const title = rawTitle.trim();
             console.log(`Generated new title (${llmProvider}):`, title);
+            lastTitle = title;
             return title;
         }
         
         return null;
     } catch (error) {
         console.error("Error generating new title:", error);
-        return null;
+        return lastTitle;
     }
 }
 
