@@ -273,6 +273,19 @@ article {
   }
 }
 
+.ai-indicator {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  
+  &.fade-out {
+    opacity: 0;
+  }
+  
+  &.fade-in {
+    opacity: 1;
+  }
+}
+
 /* Senior Text Animation */
 .senior-text {
   display: inline-block;
@@ -346,4 +359,9 @@ article {
     background-clip: text;
     animation: gradient-shift 5s linear infinite;
   }
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 0.15rem;
 }
