@@ -88,11 +88,15 @@
 	<script>
 		(function () {
 
-			let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here"]
+			let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes"]
+
+
 			
 			// Title rotation functionality
 			let currentTitleIndex = 0;
 			let titleRotationInterval = null;
+			let promptSession = null;
+			let isLLMReady = false;
 			
 			function fadeOutOriginalTitle() {
 				const originalTitle = document.querySelector('.original-title');
@@ -101,36 +105,63 @@
 				}
 			}
 
-			async function generateNewTitle() {
-				const availability = await LanguageModel.availability();
-				console.log("availability", availability)
-				let prompt = `You are a marketing consultant for a senior developer.
-							Your job is to generate a short, funny, creative job title.
-							It should sound like a real corporate job title but with a humorous twist.
-							Keep it under 5 words.
-							Do not include explanations—only output the title itself.
-							Here are some examples: ${titles.join(', ')}`
+			async function initializeLLMSession() {
+				try {
+					const availability = await LanguageModel.availability();
+					
+					let prompt = `You are a marketing consultant for a senior developer.
+								Your job is to generate a short, funny, creative job title.
+								It should sound like a real corporate job title but with a humorous twist.
+								Keep it under 5 words.
+								Do not include explanations—only output the title itself.
+								Only include the title, no other text.
+								Here are some examples: ${titles.join(', ')}`;
 
-				const session = await LanguageModel.create({
-				monitor(m) {
-					m.addEventListener('downloadprogress', (e) => {
-					console.log(`Downloaded ${e.loaded * 100}%`);
+					promptSession = await LanguageModel.create({
+						monitor(m) {
+							m.addEventListener('downloadprogress', (e) => {
+								console.log(`Downloaded ${e.loaded * 100}%`);
+							});
+						},
+						initialPrompt: [
+							{
+								type: 'system',
+								content: prompt,
+							},
+						],	
 					});
-				},
-				initialPrompt: [
-					{
-						type: 'system',
-						content: prompt,
-					},
-				],	
-				});
+					
+					isLLMReady = true;
+					console.log("LLM session initialized and ready");
+				} catch (error) {
+					console.error("Error initializing LLM session:", error);
+					isLLMReady = false;
+				}
+			}
 
-				const string2 = await session.prompt(`${prompt}. Generate a new title! Do not include explanations—only output the title itself.`);
-				console.log("string2", string2)
-				return string2;
+			async function generateNewTitle() {
+				if (!isLLMReady || !promptSession) {
+					console.warn("LLM session not ready yet");
+					return null;
+				}
+				
+				try {
+					let prompt = `You are a marketing consultant for a senior developer.
+								Your job is to generate a short, funny, creative job title.
+								It should sound like a real corporate job title but with a humorous twist.
+								Keep it under 5 words. Do not include explanations—only output the title itself. Only include the title, no other text.
+								Here are some examples: ${titles.join(', ')}`;
+					
+					const newTitle = await promptSession.prompt(`${prompt}. Generate a new title!`);
+					console.log("Generated new title:", newTitle);
+					return newTitle;
+				} catch (error) {
+					console.error("Error generating new title:", error);
+					return null;
+				}
 			}
 			
-			function showNextTitle() {
+			async function showNextTitle(useGeneratedTitle = false) {
 				const originalTitle = document.querySelector('.original-title');
 				if (!originalTitle) return;
 				
@@ -138,20 +169,33 @@
 				originalTitle.classList.remove('fade-in');
 				originalTitle.classList.add('fade-out');
 				
-				setTimeout(() => {
-					// Update title text
-					const titleText = titles[currentTitleIndex];
-					originalTitle.innerHTML = `${titleText}`;
+				setTimeout(async () => {
+					let titleText;
 					
+					// Try to use generated title if requested and LLM is ready
+					if (useGeneratedTitle && isLLMReady) {
+						const generatedTitle = await generateNewTitle();
+						if (generatedTitle) {
+							titleText = generatedTitle.trim();
+						} else {
+							// Fallback to array titles if generation fails
+							titleText = titles[currentTitleIndex];
+							currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+						}
+					} else {
+						// Use title from array
+						titleText = titles[currentTitleIndex];
+						currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+					}
+					
+					originalTitle.innerHTML = `${titleText}`;
 					console.log('showNextTitle', titleText);
+					
 					// Fade in new title
 					setTimeout(() => {
 						originalTitle.classList.remove('fade-out');
 						originalTitle.classList.add('fade-in');
 					}, 50);
-					
-					// Move to next title
-					currentTitleIndex = (currentTitleIndex + 1) % titles.length;
 				}, 500); // Wait for fade out to complete
 			}
 			
@@ -161,12 +205,13 @@
 				
 				// Wait for fade out, then show first fake title
 				setTimeout(() => {
-					showNextTitle();
-					generateNewTitle()
+					// Show first title from array
+					showNextTitle(false);
 					
-					// Then rotate every 30 seconds
+					// Then rotate every 8 seconds, using generated titles if LLM is ready
 					titleRotationInterval = setInterval(() => {
-						showNextTitle();
+						// Check dynamically if LLM is ready
+						showNextTitle(isLLMReady);
 					}, 8_000);
 				}, 500);
 			}
@@ -266,7 +311,10 @@
 			}
 
 			// Trigger animations on page load
-			window.addEventListener('DOMContentLoaded', () => {
+			window.addEventListener('DOMContentLoaded', async () => {
+				// Initialize LLM session first (this will download/setup the model)
+				await initializeLLMSession();
+				
 				// Start title rotation
 				window.setTimeout(() => {
 					startTitleRotation();
