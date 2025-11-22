@@ -11,7 +11,7 @@ let llmProvider = null; // 'prompt-api' or 'webllm'
 const systemPrompt = `You are a marketing consultant for a senior developer.
                     Generate ONLY a short, funny, creative job title.
                     Rules:
-                    - Maximum 5 words
+                    - Maximum 4 words
                     - NO explanations, NO descriptions, NO additional text
                     - NO punctuation marks (no periods, exclamation marks, quotes, etc.)
                     - NO introductory phrases like "Here's", "Introducing", "New title:", etc.
@@ -102,7 +102,7 @@ async function initializeWebLLM() {
         const engine = new window.webllm.MLCEngine({ initProgressCallback });
         // Using a smaller model for faster loading
         // https://github.com/mlc-ai/web-llm/issues/683
-        const modelId = 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC';
+        const modelId = 'Llama-3.2-1B-Instruct-q4f32_1-MLC';
         
         console.log("Loading WebLLM model...");
         await engine.reload(modelId, {
