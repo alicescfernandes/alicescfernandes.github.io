@@ -240,6 +240,39 @@ article {
   }
 }
 
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.original-title {
+  transition: opacity 0.5s ease-in-out;
+  
+  &.fade-out {
+    opacity: 0;
+  }
+  
+  &.fade-in {
+    opacity: 1;
+  }
+}
+
 /* Senior Text Animation */
 .senior-text {
   display: inline-block;

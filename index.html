@@ -31,7 +31,9 @@
 			<div class="row">
 				<div class="text-home">
 					<h1>Alice Fernandes</h1>
-					<h2><span class="senior-placeholder senior-text">Senior</span> Front-End Web Developer</h2>
+					<h2 class="original-title">
+						<span class="senior-placeholder senior-text">Senior</span> Front-End Web Developer
+					</h2>
 				</div>
 				<!-- Confetti container -->
 				<div id="confetti-container"></div>
@@ -85,6 +87,90 @@
 
 	<script>
 		(function () {
+
+			let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here"]
+			
+			// Title rotation functionality
+			let currentTitleIndex = 0;
+			let titleRotationInterval = null;
+			
+			function fadeOutOriginalTitle() {
+				const originalTitle = document.querySelector('.original-title');
+				if (originalTitle) {
+					originalTitle.classList.add('fade-out');
+				}
+			}
+
+			async function generateNewTitle() {
+				const availability = await LanguageModel.availability();
+				console.log("availability", availability)
+				let prompt = `You are a marketing consultant for a senior developer.
+							Your job is to generate a short, funny, creative job title.
+							It should sound like a real corporate job title but with a humorous twist.
+							Keep it under 5 words.
+							Do not include explanations—only output the title itself.
+							Here are some examples: ${titles.join(', ')}`
+
+				const session = await LanguageModel.create({
+				monitor(m) {
+					m.addEventListener('downloadprogress', (e) => {
+					console.log(`Downloaded ${e.loaded * 100}%`);
+					});
+				},
+				initialPrompt: [
+					{
+						type: 'system',
+						content: prompt,
+					},
+				],	
+				});
+
+				const string2 = await session.prompt(`${prompt}. Generate a new title! Do not include explanations—only output the title itself.`);
+				console.log("string2", string2)
+				return string2;
+			}
+			
+			function showNextTitle() {
+				const originalTitle = document.querySelector('.original-title');
+				if (!originalTitle) return;
+				
+				// Fade out current title
+				originalTitle.classList.remove('fade-in');
+				originalTitle.classList.add('fade-out');
+				
+				setTimeout(() => {
+					// Update title text
+					const titleText = titles[currentTitleIndex];
+					originalTitle.innerHTML = `${titleText}`;
+					
+					console.log('showNextTitle', titleText);
+					// Fade in new title
+					setTimeout(() => {
+						originalTitle.classList.remove('fade-out');
+						originalTitle.classList.add('fade-in');
+					}, 50);
+					
+					// Move to next title
+					currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+				}, 500); // Wait for fade out to complete
+			}
+			
+			function startTitleRotation() {
+				// Fade out original title first
+				fadeOutOriginalTitle();
+				
+				// Wait for fade out, then show first fake title
+				setTimeout(() => {
+					showNextTitle();
+					generateNewTitle()
+					
+					// Then rotate every 30 seconds
+					titleRotationInterval = setInterval(() => {
+						showNextTitle();
+					}, 8_000);
+				}, 500);
+			}
+			
 			// Confetti burst animation
 			const confettiCount = 100;
 
@@ -181,6 +267,11 @@
 
 			// Trigger animations on page load
 			window.addEventListener('DOMContentLoaded', () => {
+				// Start title rotation
+				window.setTimeout(() => {
+					startTitleRotation();
+				}, 1000);
+				
 				if (!hasConfetti) {
 					return true
 				}
