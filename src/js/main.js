@@ -4,13 +4,21 @@ let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title h
 let currentTitleIndex = 0;
 let titleRotationInterval = null;
 let promptSession = null;
+let webllmEngine = null;
 let isLLMReady = false;
+let llmProvider = null; // 'prompt-api' or 'webllm'
 
-const prompt = `You are a marketing consultant for a senior developer.
-                    Your job is to generate a short, funny, creative job title.
-                    It should sound like a real corporate job title but with a humorous twist.
-                    Keep it under 5 words. Do not include explanations—only output the title itself. Only include the title, no other text. Do not include punctuation.
-                    Here are some examples: ${titles.join(', ')}`;
+const systemPrompt = `You are a marketing consultant for a senior developer.
+                    Generate ONLY a short, funny, creative job title.
+                    Rules:
+                    - Maximum 5 words
+                    - NO explanations, NO descriptions, NO additional text
+                    - NO punctuation marks (no periods, exclamation marks, quotes, etc.)
+                    - NO introductory phrases like "Here's", "Introducing", "New title:", etc.
+                    - Output ONLY the title itself, nothing else. no backround text, no explanation, no nothing.
+                    - Sound like a real corporate job title but with a humorous twist, and related with the tech industry
+                    Examples: ${titles.join(', ')}
+                    Output format: Just the title, nothing else.`;
 
 
 function fadeOutOriginalTitle() {
@@ -20,42 +28,231 @@ function fadeOutOriginalTitle() {
     }
 }
 
-async function initializeLLMSession() {
+async function checkPromptAPIAvailability() {
     try {
-        
-    
+        if (typeof LanguageModel !== 'undefined' && LanguageModel.availability) {
+            const availability = await LanguageModel.availability();
+            return availability;
+        }
+        return false;
+    } catch (error) {
+        return false;
+    }
+}
+
+async function initializePromptAPI() {
+    try {
         promptSession = await LanguageModel.create({
             monitor(m) {
                 m.addEventListener('downloadprogress', (e) => {
-                    console.log(`Downloaded ${e.loaded * 100}%`);
+                    console.log(`Prompt API: Downloaded ${e.loaded * 100}%`);
                 });
             },
             initialPrompt: [
                 {
                     type: 'system',
-                    content: prompt,
+                    content: systemPrompt,
                 },
             ],	
         });
         
+        llmProvider = 'prompt-api';
         isLLMReady = true;
-        console.log("LLM session initialized and ready");
+        console.log("Prompt Session API initialized and ready");
+        updateAIIndicator('prompt-api');
+        return true;
     } catch (error) {
-        console.error("Error initializing LLM session:", error);
-        isLLMReady = false;
+        console.error("Error initializing Prompt Session API:", error);
+        return false;
     }
 }
 
-async function generateNewTitle() {
-    if (!isLLMReady || !promptSession) {
-        console.warn("LLM session not ready yet");
+async function initializeWebLLM() {
+    try {
+        // Wait for webllm to be available
+        if (!window.webllm) {
+            await new Promise((resolve, reject) => {
+                let attempts = 0;
+                const maxAttempts = 50; // 5 seconds max wait
+                const checkWebLLM = setInterval(() => {
+                    if (window.webllm) {
+                        clearInterval(checkWebLLM);
+                        resolve();
+                    } else if (++attempts >= maxAttempts) {
+                        clearInterval(checkWebLLM);
+                        reject(new Error('WebLLM failed to load'));
+                    }
+                }, 100);
+            });
+        }
+
+        const initProgressCallback = (progress) => {
+            /*
+                {
+                "progress": 0.25314193817380426,
+                "timeElapsed": 24,
+                "text": "Fetching param cache[5/24]: 150MB fetched. 25% completed, 24 secs elapsed. It can take a while when we first visit this page to populate the cache. Later refreshes will become faster."
+                }
+            */
+            console.log("Model loading progress:", progress.progress, "timeElapsed:", progress.timeElapsed, "text:"     , progress.text   );
+        };
+
+        const engine = new window.webllm.MLCEngine({ initProgressCallback });
+        // Using a smaller model for faster loading
+        const modelId = 'TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC';
+        
+        console.log("Loading WebLLM model...");
+        await engine.reload(modelId, {
+            
+            onProgress: (progress) => {
+                console.log(`WebLLM: Model loading progress: ${progress}`);
+            }
+        });
+        
+        webllmEngine = engine;
+        llmProvider = 'webllm';
+        isLLMReady = true;
+        console.log("WebLLM engine initialized and ready");
+        updateAIIndicator('webllm');
+        return true;
+    } catch (error) {
+        console.error("Error initializing WebLLM engine:", error);
+        return false;
+    }
+}
+
+async function initializeLLMSession() {
+    // Try Prompt Session API first
+    const promptAPIAvailable = await checkPromptAPIAvailability();
+    
+    if (promptAPIAvailable) {
+        const success = await initializePromptAPI();
+        if (success) {
+            return;
+        }
+    }
+    
+    // Fallback to WebLLM
+    console.log("Prompt Session API not available, falling back to WebLLM");
+    await initializeWebLLM();
+}
+
+function updateAIIndicator(provider) {
+    const aiIndicator = document.querySelector('.ai-indicator');
+    const aiLink = document.querySelector('.ai-api-link');
+    
+    if (!aiIndicator || !aiLink) return;
+    
+    if (provider === 'prompt-api') {
+        aiLink.textContent = 'Prompt Session API';
+        aiLink.href = 'https://web.dev/articles/ai-chatbot-promptapi#demo';
+    } else if (provider === 'webllm') {
+        aiLink.textContent = 'WebLLM';
+        aiLink.href = 'https://llm.mlc.ai/docs/deploy/webllm.html';
+    }
+}
+
+function cleanAndValidateTitle(title) {
+    if (!title) return null;
+    
+    // Remove common unwanted prefixes
+    const unwantedPrefixes = [
+        /^here'?s?\s+a?\s*/i,
+        /^introducing\s+/i,
+        /^new\s+title:?\s*/i,
+        /^title:?\s*/i,
+        /^here'?s?\s+the\s+/i,
+        /^here'?s?\s+a\s+new\s+/i,
+        /^the\s+title\s+is:?\s*/i,
+        /^try:?\s*/i,
+        /^suggested:?\s*/i,
+    ];
+    
+    let cleaned = title.trim();
+    
+    // Remove unwanted prefixes
+    for (const prefix of unwantedPrefixes) {
+        cleaned = cleaned.replace(prefix, '');
+    }
+    
+    // Remove quotes and punctuation at start/end
+    cleaned = cleaned.replace(/^["'`«»„""]|["'`«»„""]$/g, '').trim();
+    cleaned = cleaned.replace(/^[.,!?;:]+|[.,!?;:]+$/g, '').trim();
+    
+    // Extract first sentence or first line if there are multiple sentences
+    // Stop at common sentence endings or newlines
+    cleaned = cleaned.split(/[.!?]\s/)[0].trim();
+    cleaned = cleaned.split('\n')[0].trim();
+    
+    // Remove any remaining explanations (look for patterns like "This is...", "The role...", etc.)
+    const explanationPatterns = [
+        /\s+this\s+is\s+/i,
+        /\s+the\s+role\s+/i,
+        /\s+this\s+new\s+title\s+/i,
+        /\s+designed\s+to\s+/i,
+        /\s+can\s+be\s+used\s+/i,
+    ];
+    
+    for (const pattern of explanationPatterns) {
+        const match = cleaned.search(pattern);
+        if (match > 0) {
+            cleaned = cleaned.substring(0, match).trim();
+            break;
+        }
+    }
+    
+    // Count words
+    const words = cleaned.split(/\s+/).filter(w => w.length > 0);
+    
+    // Validate: must be between 1 and 6 words (allowing a bit of flexibility)
+    if (words.length === 0 || words.length > 6) {
         return null;
     }
     
-    try {	
-        const newTitle = await promptSession.prompt(`${prompt}. Generate a new title!`);
-        console.log("Generated new title:", newTitle);
-        return newTitle;
+    // Check if it's too long (more than 50 characters is probably too long)
+    if (cleaned.length > 50) {
+        return null;
+    }
+    
+    // Final cleanup: remove any remaining trailing punctuation
+    cleaned = cleaned.replace(/[.,!?;:]+$/, '').trim();
+    
+    return cleaned || null;
+}
+
+async function generateNewTitle() {
+    if (!isLLMReady) {
+        console.warn("LLM not ready yet");
+        return null;
+    }
+    
+    try {
+        let rawTitle = null;
+        
+        if (llmProvider === 'prompt-api' && promptSession) {
+            // Use Prompt Session API
+            rawTitle = await promptSession.prompt(`${systemPrompt}. Generate a new title!`);
+        } else if (llmProvider === 'webllm' && webllmEngine) {
+            // Use WebLLM
+            const messages = [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: 'Generate a new title. Output ONLY the title, nothing else.' }
+            ];
+            
+            const response = await webllmEngine.chat.completions.create({
+                messages: messages
+            });
+            rawTitle = response.choices[0].message.content;
+        }
+        
+        if (rawTitle) {
+            // Just basic trimming, no validation
+            const title = rawTitle.trim();
+            console.log(`Generated new title (${llmProvider}):`, title);
+            return title;
+        }
+        
+        return null;
     } catch (error) {
         console.error("Error generating new title:", error);
         return null;
@@ -229,20 +426,23 @@ function createConfetti() {
 
 // Trigger animations on page load
 window.addEventListener('DOMContentLoaded', async () => {
-    // Initialize LLM session first (this will download/setup the model)
+    // Initialize LLM session first (tries Prompt API, falls back to WebLLM)
     await initializeLLMSession();
     
-    try {
-    const availability = await LanguageModel.availability();
-    } catch (error) {
-        document.querySelector('.ai-indicator').remove();
-    }
-    // Start title rotation
-    if(isLLMReady) {
+    // If neither LLM initialized, remove the AI indicator
+    if (!isLLMReady) {
+        const aiIndicator = document.querySelector('.ai-indicator');
+        if (aiIndicator) {
+            aiIndicator.remove();
+        }
+    }else{
+        // Start title rotation
         window.setTimeout(() => {
             startTitleRotation();
         }, 1000);
     }
+    
+   
     
     if (!hasConfetti) {
         return true

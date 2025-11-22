@@ -14,6 +14,11 @@
 		rel="stylesheet">
 
 	<link rel="stylesheet" href="public/scss/style.css" />
+	<script type="module">
+		// Load WebLLM as fallback
+		import * as webllm from 'https://esm.run/@mlc-ai/web-llm';
+		window.webllm = webllm;
+	</script>
 	<meta name="description" content="Hi there, i'm alice and this is my portolio website. Check it out" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Alice Fernandes - Front End Developer" />
@@ -34,7 +39,7 @@
 					<h2 class="original-title">
 						<span class="senior-placeholder senior-text">Senior</span> Front-End Web Developer
 					</h2>
-					<em class="ai-indicator" style="visibility: hidden;">Generated with AI using the <a  class="underline" href="https://web.dev/articles/ai-chatbot-promptapi#demo">Prompt Session API</a></a></em>
+					<em class="ai-indicator" style="visibility: hidden;">Generated with AI using <a class="underline ai-api-link" href="https://web.dev/articles/ai-chatbot-promptapi#demo">Prompt Session API</a></em>
 				</div>
 				<!-- Confetti container -->
 				<div id="confetti-container"></div>

@@ -9,6 +9,7 @@ import * as esbuild from 'esbuild';
 		write: true,
 		minify: true,
 		outdir: 'public',
+		sourcemap: true,
 		plugins: [
 			sassPlugin({
 				filter: /\.scss$/,
