@@ -295,7 +295,6 @@ async function showNextTitle(useGeneratedTitle = false) {
         }
         
         originalTitle.innerHTML = `${titleText}`;
-        console.log('showNextTitle', titleText);
         
         // Show or hide AI indicator
         if (aiIndicator) {
