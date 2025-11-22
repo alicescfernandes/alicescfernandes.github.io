@@ -94,12 +94,15 @@ async function initializeWebLLM() {
                 "text": "Fetching param cache[5/24]: 150MB fetched. 25% completed, 24 secs elapsed. It can take a while when we first visit this page to populate the cache. Later refreshes will become faster."
                 }
             */
+
             console.log("Model loading progress:", progress.progress, "timeElapsed:", progress.timeElapsed, "text:"     , progress.text   );
+            document.querySelector('.original-title').innerHTML = `Hang-on! </br>Something incredible is coming.</br>${Math.round(progress.progress * 100)}%`;
         };
 
         const engine = new window.webllm.MLCEngine({ initProgressCallback });
         // Using a smaller model for faster loading
-        const modelId = 'TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC';
+        // https://github.com/mlc-ai/web-llm/issues/683
+        const modelId = 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC';
         
         console.log("Loading WebLLM model...");
         await engine.reload(modelId, {
