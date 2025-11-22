@@ -26,6 +26,7 @@ const systemPrompt = `You are a marketing consultant for a senior developer.
                     Examples: ${titles.join(', ')}
                     Output format: Just the title, nothing else.`;
 
+const isDesktop = window.innerWidth >= 1024;
 
 function fadeOutOriginalTitle() {
     const originalTitle = document.querySelector('.original-title');
@@ -131,6 +132,10 @@ async function initializeWebLLM() {
 }
 
 async function initializeLLMSession() {
+
+    if(window.innerWidth < 1024) {
+        return;
+    }
     // Try Prompt Session API first
     const promptAPIAvailable = await checkPromptAPIAvailability();
     
@@ -435,24 +440,37 @@ function createConfetti() {
 
 // Trigger animations on page load
 window.addEventListener('DOMContentLoaded', async () => {
-    // Initialize LLM session first (tries Prompt API, falls back to WebLLM)
-    await initializeLLMSession();
+
+    if(isDesktop){
+        const webllm = await import('https://esm.run/@mlc-ai/web-llm');
+        window.webllm = webllm;
     
-    // If neither LLM initialized, remove the AI indicator
-    if (!isLLMReady) {
+        // Initialize LLM session first (tries Prompt API, falls back to WebLLM)
+        await initializeLLMSession();
+    
+        // If neither LLM initialized, remove the AI indicator
+        if (!isLLMReady) {
+            const aiIndicator = document.querySelector('.ai-indicator');
+            if (aiIndicator) {
+                aiIndicator.remove();
+            }
+        }else{
+            // Start title rotation only on non-mobile devices
+            if (window.innerWidth >= 1024) {
+                window.setTimeout(() => {
+                    startTitleRotation();
+                }, 1000);
+            }
+        }
+    }else{
         const aiIndicator = document.querySelector('.ai-indicator');
         if (aiIndicator) {
             aiIndicator.remove();
         }
-    }else{
-        // Start title rotation
-        window.setTimeout(() => {
-            startTitleRotation();
-        }, 1000);
     }
-    
+
    
-    
+
     if (!hasConfetti) {
         return true
     }
