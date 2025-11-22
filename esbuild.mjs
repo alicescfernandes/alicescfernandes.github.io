@@ -4,11 +4,11 @@ import * as esbuild from 'esbuild';
 
 (async () => {
 	await esbuild.build({
-		entryPoints: ['src/scss/style.scss'],
+		entryPoints: ['src/scss/style.scss', 'src/js/main.js'],
 		bundle: true,
 		write: true,
 		minify: true,
-		outdir: 'css',
+		outdir: 'public',
 		plugins: [
 			sassPlugin({
 				filter: /\.scss$/,
