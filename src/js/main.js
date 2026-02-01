@@ -41,7 +41,6 @@ async function initializeLLMSession() {
         isLLMReady = true;
         console.log("LLM session initialized and ready");
     } catch (error) {
-        console.error("Error initializing LLM session:", error);
         isLLMReady = false;
     }
 }
@@ -256,3 +255,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     // Start confetti burst animation
     createConfetti();
 });
+
+
+const checkRybbit = () => {
+  if (typeof window.rybbit?.pageview === 'function') {
+    window.rybbit.pageview();
+    console.log("Tracking page view");
+    return;
+  }
+  setTimeout(checkRybbit, 100);
+};
+
+window.addEventListener("load", checkRybbit);

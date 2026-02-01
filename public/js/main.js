@@ -1,5 +1,191 @@
-(()=>{var d=["Chief Typo Officer","Senior LLM Engineer","What a weird title here","Hello there","Get me outta here","Lead Bug Whisperer","Principal Snack Strategist","Global Chaos Coordinator","Junior Vibe Architect","Senior Coffee Overlord","Chief Panic Officer","Head of Accidental Innovation","Director of Keyboard Catastrophes"],l=0,T=null,m=null,c=!1,L=`You are a marketing consultant for a senior developer.
+(() => {
+  // src/js/main.js
+  var titles = ["Chief Typo Officer", "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes"];
+  var currentTitleIndex = 0;
+  var titleRotationInterval = null;
+  var promptSession = null;
+  var isLLMReady = false;
+  var prompt = `You are a marketing consultant for a senior developer.
                     Your job is to generate a short, funny, creative job title.
                     It should sound like a real corporate job title but with a humorous twist.
                     Keep it under 5 words. Do not include explanations\u2014only output the title itself. Only include the title, no other text. Do not include punctuation.
-                    Here are some examples: ${d.join(", ")}`;function M(){let e=document.querySelector(".original-title");e&&e.classList.add("fade-out")}async function v(){try{m=await LanguageModel.create({monitor(e){e.addEventListener("downloadprogress",o=>{console.log(`Downloaded ${o.loaded*100}%`)})},initialPrompt:[{type:"system",content:L}]}),c=!0,console.log("LLM session initialized and ready")}catch(e){console.error("Error initializing LLM session:",e),c=!1}}async function b(){if(!c||!m)return console.warn("LLM session not ready yet"),null;try{let e=await m.prompt(`${L}. Generate a new title!`);return console.log("Generated new title:",e),e}catch(e){return console.error("Error generating new title:",e),null}}async function h(e=!1){let o=document.querySelector(".original-title"),i=document.querySelector(".ai-indicator");o&&(o.classList.remove("fade-in"),o.classList.add("fade-out"),setTimeout(async()=>{let t,a=!1;if(e&&c){let r=await b();r?(t=r.trim(),a=!0):(t=d[l],l=(l+1)%d.length,a=!1)}else t=d[l],l=(l+1)%d.length,a=!1;o.innerHTML=`${t}`,console.log("showNextTitle",t),i&&(a?(i.style.visibility="visible",i.classList.add("fade-in")):i.style.visibility="hidden"),setTimeout(()=>{o.classList.remove("fade-out"),o.classList.add("fade-in")},50)},500))}function C(){M(),setTimeout(()=>{h(!1),T=setInterval(()=>{h(c)},5e3)},500)}var y=100,S="confetti",p=["\u{1F389}","\u{1F973}","\u{1F389}","\u{1F38A}","\u{1F389}"];var P=new URLSearchParams(window.location.search),D=Date.now(),I=new Date("2025-10-01").getTime(),x=P.has("\u{1F389}")||D<I;x||document.querySelector(".senior-text").classList.remove("senior-text");function w(e,o){let i=Math.atan2(window.innerHeight/2-e,window.innerWidth/2-o),t=Math.PI/2,a=i+(Math.random()-.5)*t,r=400+Math.random()*500,s=Math.cos(a)*r,n=Math.sin(a)*r;return{randomX:s,randomY:n}}function g(e,o){let i=Math.round(0+Math.random()*p.length),t=document.createElement("div");return t.className=S,t.style.fontSize=`${1.5+Math.random()}rem`,t.textContent=p[i],t.style.animationDuration=3+Math.random()*3+"s",t}function E(){let e=document.getElementById("confetti-container"),o=["#ff6b6b","#4ecdc4","#45b7d1","#96ceb4","#feca57","#ff9ff3","#54a0ff"],i=-50,t=-50,a=window.innerWidth+50,r=-50;for(let s=0;s<y;s++){let n=g(t,i);n.style.left=i+"px",n.style.top=t+"px";let{randomX:f,randomY:u}=w(t,i);n.style.setProperty("--random-x",f+"px"),n.style.setProperty("--random-y",u+"px"),e.appendChild(n)}for(let s=0;s<y;s++){let n=g(r,a);n.style.left=a+"px",n.style.top=r+"px";let{randomX:f,randomY:u}=w(r,a);n.style.setProperty("--random-x",f+"px"),n.style.setProperty("--random-y",u+"px"),e.appendChild(n)}setTimeout(()=>{e.innerHTML=""},1e4)}window.addEventListener("DOMContentLoaded",async()=>{await v();try{let e=await LanguageModel.availability()}catch{document.querySelector(".ai-indicator").remove()}if(c&&window.setTimeout(()=>{C()},1e3),!x)return!0;window.setTimeout(()=>{document.querySelector(".senior-placeholder").classList.add("animate-senior")},0),E()});})();
+                    Here are some examples: ${titles.join(", ")}`;
+  function fadeOutOriginalTitle() {
+    const originalTitle = document.querySelector(".original-title");
+    if (originalTitle) {
+      originalTitle.classList.add("fade-out");
+    }
+  }
+  async function initializeLLMSession() {
+    try {
+      promptSession = await LanguageModel.create({
+        monitor(m) {
+          m.addEventListener("downloadprogress", (e) => {
+            console.log(`Downloaded ${e.loaded * 100}%`);
+          });
+        },
+        initialPrompt: [
+          {
+            type: "system",
+            content: prompt
+          }
+        ]
+      });
+      isLLMReady = true;
+      console.log("LLM session initialized and ready");
+    } catch (error) {
+      isLLMReady = false;
+    }
+  }
+  async function generateNewTitle() {
+    if (!isLLMReady || !promptSession) {
+      console.warn("LLM session not ready yet");
+      return null;
+    }
+    try {
+      const newTitle = await promptSession.prompt(`${prompt}. Generate a new title!`);
+      console.log("Generated new title:", newTitle);
+      return newTitle;
+    } catch (error) {
+      console.error("Error generating new title:", error);
+      return null;
+    }
+  }
+  async function showNextTitle(useGeneratedTitle = false) {
+    const originalTitle = document.querySelector(".original-title");
+    const aiIndicator = document.querySelector(".ai-indicator");
+    if (!originalTitle) return;
+    originalTitle.classList.remove("fade-in");
+    originalTitle.classList.add("fade-out");
+    setTimeout(async () => {
+      let titleText;
+      let isAIGenerated = false;
+      if (useGeneratedTitle && isLLMReady) {
+        const generatedTitle = await generateNewTitle();
+        if (generatedTitle) {
+          titleText = generatedTitle.trim();
+          isAIGenerated = true;
+        } else {
+          titleText = titles[currentTitleIndex];
+          currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+          isAIGenerated = false;
+        }
+      } else {
+        titleText = titles[currentTitleIndex];
+        currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+        isAIGenerated = false;
+      }
+      originalTitle.innerHTML = `${titleText}`;
+      console.log("showNextTitle", titleText);
+      if (aiIndicator) {
+        if (isAIGenerated) {
+          aiIndicator.style.visibility = "visible";
+          aiIndicator.classList.add("fade-in");
+        } else {
+          aiIndicator.style.visibility = "hidden";
+        }
+      }
+      setTimeout(() => {
+        originalTitle.classList.remove("fade-out");
+        originalTitle.classList.add("fade-in");
+      }, 50);
+    }, 500);
+  }
+  function startTitleRotation() {
+    fadeOutOriginalTitle();
+    setTimeout(() => {
+      showNextTitle(false);
+      titleRotationInterval = setInterval(() => {
+        showNextTitle(isLLMReady);
+      }, 5e3);
+    }, 500);
+  }
+  var confettiCount = 100;
+  var confettiClassName = "confetti";
+  var confettiText = ["\u{1F389}", "\u{1F973}", "\u{1F389}", "\u{1F38A}", "\u{1F389}"];
+  var searchParams = new URLSearchParams(window.location.search);
+  var currentDate = Date.now();
+  var confettiEndDate = (/* @__PURE__ */ new Date("2025-10-01")).getTime();
+  var hasConfetti = searchParams.has("\u{1F389}") || currentDate < confettiEndDate;
+  if (!hasConfetti) {
+    const seniorText = document.querySelector(".senior-text");
+    seniorText.classList.remove("senior-text");
+  }
+  function finalConfettiParticles(posY, posX) {
+    const centerAngle = Math.atan2(window.innerHeight / 2 - posY, window.innerWidth / 2 - posX);
+    const spread = Math.PI / 2;
+    const angle = centerAngle + (Math.random() - 0.5) * spread;
+    const distance = 400 + Math.random() * 500;
+    const randomX = Math.cos(angle) * distance;
+    const randomY = Math.sin(angle) * distance;
+    return { randomX, randomY };
+  }
+  function createConfettiParticles(posY, posX) {
+    const idx = Math.round(0 + Math.random() * confettiText.length);
+    const confetti = document.createElement("div");
+    confetti.className = confettiClassName;
+    confetti.style.fontSize = `${1.5 + Math.random()}rem`;
+    confetti.textContent = confettiText[idx];
+    confetti.style.animationDuration = 3 + Math.random() * 3 + "s";
+    return confetti;
+  }
+  function createConfetti() {
+    const container = document.getElementById("confetti-container");
+    const colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#54a0ff"];
+    const leftX = -50;
+    const leftY = -50;
+    const rightX = window.innerWidth + 50;
+    const rightY = -50;
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = createConfettiParticles(leftY, leftX);
+      confetti.style.left = leftX + "px";
+      confetti.style.top = leftY + "px";
+      const { randomX, randomY } = finalConfettiParticles(leftY, leftX);
+      confetti.style.setProperty("--random-x", randomX + "px");
+      confetti.style.setProperty("--random-y", randomY + "px");
+      container.appendChild(confetti);
+    }
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = createConfettiParticles(rightY, rightX);
+      confetti.style.left = rightX + "px";
+      confetti.style.top = rightY + "px";
+      const { randomX, randomY } = finalConfettiParticles(rightY, rightX);
+      confetti.style.setProperty("--random-x", randomX + "px");
+      confetti.style.setProperty("--random-y", randomY + "px");
+      container.appendChild(confetti);
+    }
+    setTimeout(() => {
+      container.innerHTML = "";
+    }, 1e4);
+  }
+  window.addEventListener("DOMContentLoaded", async () => {
+    await initializeLLMSession();
+    try {
+      const availability = await LanguageModel.availability();
+    } catch (error) {
+      document.querySelector(".ai-indicator").remove();
+    }
+    if (isLLMReady) {
+      window.setTimeout(() => {
+        startTitleRotation();
+      }, 1e3);
+    }
+    if (!hasConfetti) {
+      return true;
+    }
+    window.setTimeout(() => {
+      const seniorText = document.querySelector(".senior-placeholder");
+      seniorText.classList.add("animate-senior");
+    }, 0);
+    createConfetti();
+  });
+  var checkRybbit = () => {
+    if (typeof window.rybbit?.pageview === "function") {
+      window.rybbit.pageview();
+      console.log("Tracking page view");
+      return;
+    }
+    setTimeout(checkRybbit, 100);
+  };
+  window.addEventListener("load", checkRybbit);
+})();

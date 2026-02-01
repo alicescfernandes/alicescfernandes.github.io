@@ -7,7 +7,7 @@ import * as esbuild from 'esbuild';
 		entryPoints: ['src/scss/style.scss', 'src/js/main.js'],
 		bundle: true,
 		write: true,
-		minify: true,
+		minify: false,
 		outdir: 'public',
 		plugins: [
 			sassPlugin({

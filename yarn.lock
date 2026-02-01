@@ -7,10 +7,10 @@
   resolved "https://registry.npmjs.org/@bufbuild/protobuf/-/protobuf-1.10.0.tgz"
   integrity sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==
 
-"@esbuild/darwin-arm64@0.23.0":
+"@esbuild/linux-x64@0.23.0":
   version "0.23.0"
-  resolved "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.23.0.tgz"
-  integrity sha512-YLntie/IdS31H54Ogdn+v50NuoWF5BDkEUFpiOChVa9UnKpftgwzZRrI4J132ETIi+D8n6xh9IviFV3eXdxfow==
+  resolved "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.23.0.tgz"
+  integrity sha512-a3pMQhUEJkITgAw6e0bWA+F+vFtCciMjW/LPtoj99MhVt+Mfb6bbL9hu2wmTZgNd994qTAEw+U/r6k3qHWWaOQ==
 
 anymatch@~3.1.2:
   version "3.1.3"
@@ -97,11 +97,6 @@ fill-range@^7.1.1:
   integrity sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==
   dependencies:
     to-regex-range "^5.0.1"
-
-fsevents@~2.3.2:
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
-  integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.2:
   version "1.1.2"
@@ -206,10 +201,15 @@ safe-identifier@^0.4.2:
   resolved "https://registry.npmjs.org/safe-identifier/-/safe-identifier-0.4.2.tgz"
   integrity sha512-6pNbSMW6OhAi9j+N8V+U715yBQsaWJ7eyEUaOrawX+isg5ZxhUlV1NipNtgaKHmFGiABwt+ZF04Ii+3Xjkg+8w==
 
-sass-embedded-darwin-arm64@1.77.5:
+sass-embedded-linux-musl-x64@1.77.5:
   version "1.77.5"
-  resolved "https://registry.npmjs.org/sass-embedded-darwin-arm64/-/sass-embedded-darwin-arm64-1.77.5.tgz"
-  integrity sha512-J3yP6w+xqPrGQE0+sO4Gam6kBDJL5ivgkFNxR0fVlvKeN5qVFYhymp/xGRRMxBrKjohEQtBGP431EzrtvUMFow==
+  resolved "https://registry.npmjs.org/sass-embedded-linux-musl-x64/-/sass-embedded-linux-musl-x64-1.77.5.tgz"
+  integrity sha512-/SW9ggXZJilbRbKvRHAxEuQM6Yr9piEpvK7/aDevFL2XFvBW9x+dTzpH5jPVEmM0qWdJisS1r5mEv8AXUUdQZg==
+
+sass-embedded-linux-x64@1.77.5:
+  version "1.77.5"
+  resolved "https://registry.npmjs.org/sass-embedded-linux-x64/-/sass-embedded-linux-x64-1.77.5.tgz"
+  integrity sha512-3EmYeY+K8nMwIy1El9C+mPuONMQyXSCD6Yyztn3G7moPdZTqXrTL7kTJIl+SRq1tCcnOMMGXnBRE7Kpou1wd+w==
 
 sass-embedded@^1.71.1:
   version "1.77.5"
