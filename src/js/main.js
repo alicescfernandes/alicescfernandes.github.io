@@ -1,4 +1,5 @@
 let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes"]
+    import rybbit from "@rybbit/js";
 
 // Title rotation functionality
 let currentTitleIndex = 0;
@@ -259,11 +260,24 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 const checkRybbit = () => {
   if (typeof window.rybbit?.pageview === 'function') {
-    window.rybbit.pageview();
+    // window.rybbit.pageview();
     console.log("Tracking page view");
     return;
   }
   setTimeout(checkRybbit, 100);
 };
 
-window.addEventListener("load", checkRybbit);
+async function initLib(params) {
+    console.log("inited")
+    await rybbit.init({
+        analyticsHost: "https://app.rybbit.io/api",
+        siteId: "36e05ec48e6f",
+    });
+
+    rybbit.pageview();
+}
+
+window.addEventListener("load", async () => {
+    initLib()
+});
+

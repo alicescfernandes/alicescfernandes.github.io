@@ -5,13 +5,16 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "node esbuild.mjs",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "node server.js"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@rybbit/js": "^0.6.0",
 		"esbuild": "0.23.0",
-		"esbuild-sass-plugin": "^3.3.1"
+		"esbuild-sass-plugin": "^3.3.1",
+		"live-server": "^1.2.2"
 	},
 	"packageManager": "yarn@4.5.0"
 }
