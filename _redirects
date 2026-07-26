@@ -1,1 +1,2 @@
+/resume https://resume.alicescfernandes.pt 301
 /resume/* https://resume.alicescfernandes.pt/:splat 301
