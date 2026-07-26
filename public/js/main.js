@@ -1062,7 +1062,6 @@
       analyticsHost: "https://app.rybbit.io/api",
       siteId: "36e05ec48e6f"
     });
-    console.log("inited");
     Vr.pageview();
   }
   window.addEventListener("load", async () => {
