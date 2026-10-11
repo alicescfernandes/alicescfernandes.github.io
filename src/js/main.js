@@ -1,4 +1,11 @@
-let titles = ['Chief Typo Officer', "Senior LLM Engineer", "What a weird title here", "Hello there", "Get me outta here", "Lead Bug Whisperer", "Principal Snack Strategist", "Global Chaos Coordinator", "Junior Vibe Architect", "Senior Coffee Overlord", "Chief Panic Officer", "Head of Accidental Innovation", "Director of Keyboard Catastrophes"]
+let titles = ['Chief Git Blame Officer', 'Senior Console Log Debugger', 'Principal Merge Conflict Resolver', 'Lead Rubber Duck Whisperer', 'Chief Cache Invalidator', 'Senior Stack Overflow Surfer', 'Head of Production Hotfixes', 'Director of Dark Mode', 'Junior Regex Wrangler', 'Senior NPM Install Destroyer', 'Chief Technical Debt Collector', 'Lead Infinite Loop Breaker', 'Principal WiFi Reconnector', 'Senior Copy Paste Engineer', 'Head of Accidental Deployments', 'Chief Semicolon Hunter', 'Lead 404 Page Finder', 'Senior Cloud Cost Explorer', 'Director of Keyboard Shortcuts', 'Chief Tabs vs Spaces Mediator']
+
+// Shuffle titles so the order feels random on each load,
+// while still using the existing sequential rotation logic.
+for (let i = titles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [titles[i], titles[j]] = [titles[j], titles[i]];
+}
     import rybbit from "@rybbit/js";
 
 // Title rotation functionality
@@ -237,12 +244,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         document.querySelector('.ai-indicator').remove();
     }
-    // Start title rotation
-    if(isLLMReady) {
-        window.setTimeout(() => {
-            startTitleRotation();
-        }, 1000);
-    }
+    // Start title rotation (always — LLM only enhances it when available)
+    window.setTimeout(() => {
+        startTitleRotation();
+    }, 1000);
     
     if (!hasConfetti) {
         return true

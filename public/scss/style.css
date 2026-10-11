@@ -95,9 +95,6 @@ p {
   margin-top: 20px;
   width: min(510px, 100%);
 }
-.link {
-  margin-top: 10px;
-}
 .link a {
   border-bottom: 2px solid transparent;
   padding-bottom: 3px;
@@ -106,6 +103,9 @@ p {
 .link a:hover {
   color: var(--dominant_hover);
   border-bottom: 2px solid var(--dominant_hover);
+}
+.link {
+  margin-top: 10px;
 }
 .icon {
   width: 25px;

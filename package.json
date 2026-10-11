@@ -11,9 +11,9 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@rybbit/js": "^0.6.0",
-		"esbuild": "0.23.0",
-		"esbuild-sass-plugin": "^3.3.1",
-		"live-server": "^1.2.2",
-		"wrangler": "^4.114.0"
+		"@rybbit/js": "0.6.3",
+		"esbuild": "0.28.2",
+		"esbuild-sass-plugin": "3.7.0",
+		"live-server": "1.2.2",
+		"wrangler": "4.149.0"
 	}}
